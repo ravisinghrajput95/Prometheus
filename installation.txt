@@ -1,0 +1,11 @@
+kubectl create namespace monitoring
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+helm repo update 
+
+helm upgrade --namespace monitoring --install kube-stack-prometheus prometheus-community/kube-prometheus-stack --set prometheus-node-exporter.hostRootFsMount.enabled=false
+
+helm ls
+
+kubectl port-forward --namespace monitoring svc/kube-stack-prometheus-kube-prometheus 9090:9090
